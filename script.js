@@ -68,14 +68,25 @@ function handleBtnClick(e) {
         case '0' <= currentValue && currentValue <= '9':
             // handle
             break;
+        
         // handle extra btns ('.', '+/-')
-
+        case currentValue === '.':
+        case currentValue === 'changeSign':
+        
         // handle AC
-
+        case currentValue === '':
+        
         // handle signs
+        case currentValue === '/':
+        case currentValue === '*':
+        case currentValue === '-':
+        case currentValue === '+':
+        case currentValue === 'sqrt':
+        case currentValue === '%':
 
         // handle =
-
+        case currentValue === '=':
+        
         // for tests...
         default:
             //alert('oo');
