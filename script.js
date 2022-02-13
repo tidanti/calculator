@@ -16,43 +16,93 @@ function divide(a, b) {
     return a / b;
 }
 
-function operate(operand, operator, enteredValue) {
-    let result;
+function operate(operand, operator, currentRes) {
+    let newResult;
     switch (operator) {
         case '+':
-            result = add(operand, enteredValue);
+            newResult = add(operand, currentRes);
             break;
         case '-':
-            result = subtract(operand, enteredValue);
+            newResult = subtract(operand, currentRes);
             break;
         case '*':
-            result = multiply(operand, enteredValue);
+            newResult = multiply(operand, currentRes);
             break;
         case '/':
-            result = divide(operand, enteredValue);
+            newResult = divide(operand, currentRes);
     }
 
-    return result;
+    return newResult;
 }
 
 function Calculator() {
-    this.operand = 0;
-    this.operator = '';
-    this.calculate = enteredValue => {
-        return operate(this.operand, this.operator, enteredValue);
+    this.currentRes = 0;
+    this.operand = null;
+    this.operator = null;
+    
+    this.getNewCurrentRes = enteredValue => {
+        return operate(this.operand, this.operator, this.currentRes);
     };
+
+    this.setNewCurrentRes = currentRes => this.currentRes = currentRes;
+    this.setNewOperand = operand => this.operand = operand;
 }
 
 function main() {
-    
+    setEventListenersForButtons();
 }
 
-function mainTests() {
+function setEventListenersForButtons() {
+    const btnList = document.querySelectorAll('.btn');
+    btnList.forEach(btn => btn.addEventListener('click', e => {
+        handleBtnClick(e);
+    }));
+}
+
+function handleBtnClick(e) {
+    const currentBtn = e.target;
+    const currentValue = currentBtn.value;
+
+    switch(true) {
+        // handle numbers
+        case '0' <= currentValue && currentValue <= '9':
+            // handle
+            break;
+        // handle extra btns ('.', '+/-')
+
+        // handle AC
+
+        // handle signs
+
+        // handle =
+
+        // for tests...
+        default:
+            //alert('oo');
+    }
+}
+
+function setNewInputValue(value) {
+    const inputField = document.querySelector('#result-field');
+    inputField.textContent = value;
+}
+
+function inputValuePush(value) {
+    const inputField = document.querySelector('#result-field');
+    inputField.textContent += value;
+}
+
+function inputValueUnshift(value) {
+    const inputField = document.querySelector('#result-field');
+    inputField.textContent = value + inputField.textContent;
+}
+
+/*function mainTests() {
     calculatorObject.operand = 2;
     calculatorObject.operator = '*';
     let res = calculatorObject.calculate(3);
     console.log(res);
-}
+}*/
 
 //mainTests();
 main();
