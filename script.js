@@ -43,6 +43,10 @@ function Calculator() {
     };
 }
 
+function main() {
+    
+}
+
 function mainTests() {
     calculatorObject.operand = 2;
     calculatorObject.operator = '*';
@@ -51,3 +55,4 @@ function mainTests() {
 }
 
 //mainTests();
+main();

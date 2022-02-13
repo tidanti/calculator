@@ -1,0 +1,85 @@
+html {
+    height: 100%;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+* {
+    /*border: 1px solid black;*/
+    box-sizing: inherit;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+    margin: 0;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+    background-color: #f0f0f0;
+    padding: 30px;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+}
+
+h1 {
+    margin: 0;
+    font-family: monospace;
+    font-size: 32px;
+    margin-bottom: 10px;
+    margin-top: -10px;
+}
+
+.input-field {
+    align-self: stretch;
+    text-align: end;
+    padding: 10px 5px;
+    border: 1px solid rgb(153, 153, 153);
+    font-weight: bold; /* ? */
+}
+
+.input-field:hover {
+    cursor: pointer;
+}
+
+.buttons-container {
+    width: 100%;
+    display: grid;
+    justify-items: stretch;
+    align-items: stretch;
+    justify-content: space-between;
+    align-content: space-between;
+    gap: 5px;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.btn {
+    padding: 15px;
+    border: 1px solid rgb(204, 204, 204);
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.btn:hover {
+    cursor: pointer;
+    border: 1px solid #999;
+}
+
+.operand-btn {
+    background-color: #f6f6f6;
+}
+
+.operator-btn {
+    background-color: #FFCC00;
+}
+
+.other-btn {
+    background-color: #ddd;
+}
