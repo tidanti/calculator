@@ -40,9 +40,10 @@ h1 {
 .input-field {
     align-self: stretch;
     text-align: end;
-    padding: 10px 5px;
+    padding: 5px 10px;
     border: 1px solid rgb(153, 153, 153);
-    font-weight: bold; /* ? */
+    font-weight: bold;
+    font-size: 18px;
 }
 
 .input-field:hover {
@@ -65,11 +66,17 @@ h1 {
     border: 1px solid rgb(204, 204, 204);
     font-weight: bold;
     font-size: 18px;
+    transition: 0.2s ease-out;
 }
 
 .btn:hover {
     cursor: pointer;
     border: 1px solid #999;
+}
+
+.btn:active {
+    border: 1px solid black;
+    background-color: #ccc;
 }
 
 .operand-btn {
