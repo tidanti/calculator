@@ -67,11 +67,25 @@ function handleBtnClick(e) {
         // handle numbers
         case '0' <= currentValue && currentValue <= '9':
             // handle
+            if (checkInputForZero()) {
+                setNewInputValue(currentValue);
+            } else {
+                inputValuePush(currentValue);
+            }
+
+            calculatorObject.operand = +getCurrentInputValue();
             break;
         
         // handle extra btns ('.', '+/-')
         case currentValue === '.':
+            inputValuePush(currentValue);
+            break;
         case currentValue === 'changeSign':
+            if (!checkInputForZero()) {
+                changeInputSign();
+                calculatorObject.operand = +getCurrentInputValue();
+            }
+            break;
         
         // handle AC
         case currentValue === '':
@@ -93,19 +107,43 @@ function handleBtnClick(e) {
     }
 }
 
+function getCurrentInputValue() {
+    const inputField = document.querySelector('#result-field');
+    return inputField.value;
+}
+
 function setNewInputValue(value) {
     const inputField = document.querySelector('#result-field');
-    inputField.textContent = value;
+    inputField.value = value;
 }
 
 function inputValuePush(value) {
     const inputField = document.querySelector('#result-field');
-    inputField.textContent += value;
+    inputField.value += value;
 }
 
 function inputValueUnshift(value) {
     const inputField = document.querySelector('#result-field');
-    inputField.textContent = value + inputField.textContent;
+    inputField.value = value + inputField.value;
+}
+
+function checkInputForZero() {
+    const inputField = document.querySelector('#result-field');
+    return inputField.value[0] === '0' && inputField.value.length === 1;
+}
+
+function checkInputForFirstZero() {
+    const inputField = document.querySelector('#result-field');
+    return inputField.value[0] === '0';
+}
+
+function changeInputSign() {
+    const inputField = document.querySelector('#result-field');
+    if (inputField.value[0] === '-') {
+        inputField.value = inputField.value.slice(1);
+    } else {
+        inputField.value = '-' + inputField.value;
+    }
 }
 
 /*function mainTests() {
