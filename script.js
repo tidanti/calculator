@@ -23,13 +23,13 @@ function operate(operand, operator, currentRes) {
             newResult = add(operand, currentRes);
             break;
         case '-':
-            newResult = subtract(operand, currentRes);
+            newResult = subtract(currentRes, operand);
             break;
         case '*':
             newResult = multiply(operand, currentRes);
             break;
         case '/':
-            newResult = divide(operand, currentRes);
+            newResult = divide(currentRes, operand);
     }
 
     return newResult;
@@ -37,15 +37,26 @@ function operate(operand, operator, currentRes) {
 
 function Calculator() {
     this.currentRes = 0;
-    this.operand = null;
-    this.operator = null;
+    this.operand = 0;
+    this.operator = '';
+
+    this.calculatedInput = false; // calculatedInput is true if it's result of calculations, false if it's user input
     
-    this.getNewCurrentRes = enteredValue => {
+    this.calcNewCurrentRes = () => {
         return operate(this.operand, this.operator, this.currentRes);
     };
+    this.getCurrentRes = () => this.currentRes;
+    this.getOperand = () => this.operand;
+    this.getOperator = () => this.operator;
+    this.getCalculatedInputFlag = () => this.calculatedInput;
 
     this.setNewCurrentRes = currentRes => this.currentRes = currentRes;
     this.setNewOperand = operand => this.operand = operand;
+    this.setNewOperator = operator => this.operator = operator;
+    this.setCalculatedInputValueFlag = value => this.calculatedInput = value;
+    this.toggleCalculatedInputFlag = () => {
+        this.calculatedInput = !this.calculatedInput;
+    };
 }
 
 function main() {
@@ -67,23 +78,27 @@ function handleBtnClick(e) {
         // handle numbers
         case '0' <= currentValue && currentValue <= '9':
             // handle
-            if (checkInputForZero()) {
+            if (checkInputForZero() || calculatorObject.calculatedInput) {
                 setNewInputValue(currentValue);
             } else {
                 inputValuePush(currentValue);
             }
 
-            calculatorObject.operand = +getCurrentInputValue();
+            calculatorObject.setNewOperand(+getCurrentInputValue());
+            calculatorObject.setCalculatedInputValueFlag(false);
             break;
         
         // handle extra btns ('.', '+/-')
         case currentValue === '.':
-            inputValuePush(currentValue);
+            if (calculatorObject.calculatedInput) {
+                inputValuePush(currentValue);
+            }
             break;
+
         case currentValue === 'changeSign':
-            if (!checkInputForZero()) {
+            if (!checkInputForZero() && !calculatorObject.calculatedInput) {
                 changeInputSign();
-                calculatorObject.operand = +getCurrentInputValue();
+                calculatorObject.setNewOperand(+getCurrentInputValue());
             }
             break;
         
@@ -99,10 +114,31 @@ function handleBtnClick(e) {
         case currentValue === '+':
         case currentValue === 'sqrt':
         case currentValue === '%':
+            if (!calculatorObject.operator) {
+                calculatorObject.setNewCurrentRes(calculatorObject.operand);
+                calculatorObject.setNewOperator(currentValue);
+            } else {
+                calculatorObject.setNewOperator(currentValue);
+                calculatorObject.setNewCurrentRes(
+                calculatorObject.calcNewCurrentRes());
+
+                setNewInputValue(calculatorObject.currentRes);
+            }
+
+            calculatorObject.setCalculatedInputValueFlag(true);
+            break;
 
         // handle =
         case currentValue === '=':
-        
+            calculatorObject.setNewCurrentRes(
+            calculatorObject.calcNewCurrentRes());
+
+            setNewInputValue(calculatorObject.currentRes);
+            calculatorObject.setCalculatedInputValueFlag(true);
+            //calculatorObject.setNewOperand(0);
+            //calculatorObject.setNewOperator('');
+            break;
+
         // for tests...
         default:
             //alert('oo');
