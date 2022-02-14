@@ -88,7 +88,9 @@ function handleBtnClick(e) {
             break;
         
         // handle AC
-        case currentValue === '':
+        case currentValue === 'AC':
+            resetAll();
+            break;
         
         // handle signs
         case currentValue === '/':
@@ -144,6 +146,12 @@ function changeInputSign() {
     } else {
         inputField.value = '-' + inputField.value;
     }
+}
+
+function resetAll() {
+    const inputField = document.querySelector('#result-field');
+    inputField.value = '0';
+    calculatorObject = new Calculator();
 }
 
 /*function mainTests() {
