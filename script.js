@@ -77,29 +77,16 @@ function handleBtnClick(e) {
     switch(true) {
         // handle numbers
         case '0' <= currentValue && currentValue <= '9':
-            // handle
-            if (checkInputForZero() || calculatorObject.calculatedInput) {
-                setNewInputValue(currentValue);
-            } else {
-                inputValuePush(currentValue);
-            }
-
-            calculatorObject.setNewOperand(+getCurrentInputValue());
-            calculatorObject.setCalculatedInputValueFlag(false);
+            handleNumberInput(currentValue);
             break;
         
         // handle extra btns ('.', '+/-')
         case currentValue === '.':
-            if (calculatorObject.calculatedInput) {
-                inputValuePush(currentValue);
-            }
+            handleFloatInput(currentValue);
             break;
 
         case currentValue === 'changeSign':
-            if (!checkInputForZero() && !calculatorObject.calculatedInput) {
-                changeInputSign();
-                calculatorObject.setNewOperand(+getCurrentInputValue());
-            }
+            handleChangeSignInput();
             break;
         
         // handle AC
@@ -114,29 +101,12 @@ function handleBtnClick(e) {
         case currentValue === '+':
         case currentValue === 'sqrt':
         case currentValue === '%':
-            if (!calculatorObject.operator) {
-                calculatorObject.setNewCurrentRes(calculatorObject.operand);
-                calculatorObject.setNewOperator(currentValue);
-            } else {
-                calculatorObject.setNewOperator(currentValue);
-                calculatorObject.setNewCurrentRes(
-                calculatorObject.calcNewCurrentRes());
-
-                setNewInputValue(calculatorObject.currentRes);
-            }
-
-            calculatorObject.setCalculatedInputValueFlag(true);
+            handleSignInput(currentValue);
             break;
 
         // handle =
         case currentValue === '=':
-            calculatorObject.setNewCurrentRes(
-            calculatorObject.calcNewCurrentRes());
-
-            setNewInputValue(calculatorObject.currentRes);
-            calculatorObject.setCalculatedInputValueFlag(true);
-            //calculatorObject.setNewOperand(0);
-            //calculatorObject.setNewOperator('');
+            handleEqualInput();
             break;
 
         // for tests...
@@ -144,6 +114,60 @@ function handleBtnClick(e) {
             //alert('oo');
     }
 }
+
+function handleNumberInput(value) {
+    if (checkInputForZero() || calculatorObject.calculatedInput) {
+        setNewInputValue(value);
+    } else {
+        inputValuePush(value);
+    }
+
+    calculatorObject.setNewOperand(+getCurrentInputValue());
+    calculatorObject.setCalculatedInputValueFlag(false);
+}
+
+function handleFloatInput(value) {
+    if (calculatorObject.calculatedInput) {
+        inputValuePush(value);
+    }
+}
+
+function handleChangeSignInput() {
+    if (!checkInputForZero() && !calculatorObject.calculatedInput) {
+        changeInputSign();
+        calculatorObject.setNewOperand(+getCurrentInputValue());
+    }
+}
+
+function handleSignInput(value) {
+    if (calculatorObject.calculatedInput) return;
+
+    if (!calculatorObject.operator) {
+        calculatorObject.setNewCurrentRes(calculatorObject.operand);
+        calculatorObject.setNewOperator(value);
+    } else {
+        calculatorObject.setNewOperator(value);
+        calculatorObject.setNewCurrentRes(
+        calculatorObject.calcNewCurrentRes());
+
+        setNewInputValue(calculatorObject.currentRes);
+    }
+
+    calculatorObject.setCalculatedInputValueFlag(true);
+}
+
+function handleEqualInput() {
+    if (!calculatorObject.operator) return;
+
+    calculatorObject.setNewCurrentRes(
+    calculatorObject.calcNewCurrentRes());
+    
+    setNewInputValue(calculatorObject.currentRes);
+    calculatorObject.setCalculatedInputValueFlag(true);
+    calculatorObject.setNewOperand(calculatorObject.currentRes);
+    calculatorObject.setNewOperator('');
+}
+
 
 function getCurrentInputValue() {
     const inputField = document.querySelector('#result-field');
