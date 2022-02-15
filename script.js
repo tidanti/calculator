@@ -97,6 +97,11 @@ function handleBtnClick(e) {
             resetAll();
             break;
         
+        // handle backspace
+        case currentValue === 'del':
+            handleDeleteOneChar();
+            break;
+
         // handle signs
         case currentValue === '/':
         case currentValue === '*':
@@ -130,7 +135,7 @@ function handleNumberInput(value) {
 }
 
 function handleFloatInput(value) {
-    if (calculatorObject.calculatedInput) {
+    if (!calculatorObject.calculatedInput) {
         inputValuePush(value);
     }
 }
@@ -180,6 +185,11 @@ function handleEqualInput() {
     calculatorObject.setNewOperator('');
 }
 
+function handleDeleteOneChar() {
+    if (calculatorObject.calculatedInput) return;
+    inputValuePop();
+    calculatorObject.setNewOperand(+getCurrentInputValue());
+}
 
 function getCurrentInputValue() {
     const inputField = document.querySelector('#result-field');
@@ -199,6 +209,11 @@ function inputValuePush(value) {
 function inputValueUnshift(value) {
     const inputField = document.querySelector('#result-field');
     inputField.value = value + inputField.value;
+}
+
+function inputValuePop() {
+    const inputField = document.querySelector('#result-field');
+    inputField.value = inputField.value.slice(0, inputField.value.length - 1);
 }
 
 function checkInputForZero() {
