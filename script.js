@@ -30,6 +30,8 @@ function operate(operand, operator, currentRes) {
             break;
         case '/':
             newResult = divide(currentRes, operand);
+        case 'sqrt':
+            
     }
 
     return newResult;
@@ -140,15 +142,23 @@ function handleChangeSignInput() {
 }
 
 function handleSignInput(value) {
-    if (calculatorObject.calculatedInput) return;
+    if (calculatorObject.calculatedInput &&
+            (calculatorObject.operand !== calculatorObject.currentRes ||
+            calculatorObject.operator)) {
+                return;
+            }
 
     if (!calculatorObject.operator) {
         calculatorObject.setNewCurrentRes(calculatorObject.operand);
         calculatorObject.setNewOperator(value);
+        //calculatorObject.setNewCurrentRes(
+        //calculatorObject.calcNewCurrentRes());
     } else {
-        calculatorObject.setNewOperator(value);
         calculatorObject.setNewCurrentRes(
         calculatorObject.calcNewCurrentRes());
+        calculatorObject.setNewOperator(value);
+        //calculatorObject.setNewCurrentRes(
+        //calculatorObject.calcNewCurrentRes());
 
         setNewInputValue(calculatorObject.currentRes);
     }
