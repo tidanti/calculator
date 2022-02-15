@@ -30,8 +30,9 @@ function operate(operand, operator, currentRes) {
             break;
         case '/':
             newResult = divide(currentRes, operand);
+            break;
         case 'sqrt':
-            
+            newResult = Math.sqrt(currentRes);
     }
 
     return newResult;
@@ -142,6 +143,7 @@ function handleChangeSignInput() {
 }
 
 function handleSignInput(value) {
+    // check: 1) is it result of calculations? 2) it is NOT result after pressing equal
     if (calculatorObject.calculatedInput &&
             (calculatorObject.operand !== calculatorObject.currentRes ||
             calculatorObject.operator)) {
