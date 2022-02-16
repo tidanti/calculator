@@ -71,6 +71,7 @@ function setEventListenersForButtons() {
     const btnList = document.querySelectorAll('.btn');
     btnList.forEach(btn => btn.addEventListener('click', e => {
         handleBtnClick(e);
+        e.target.blur();
     }));
 }
 
