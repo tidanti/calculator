@@ -64,7 +64,7 @@ function Calculator() {
 
 function main() {
     setEventListenersForButtons();
-    setEventListenerForKeyboardPress();
+    setEventListenersForKeyboardPress();
 }
 
 function setEventListenersForButtons() {
@@ -74,11 +74,27 @@ function setEventListenersForButtons() {
     }));
 }
 
-function setEventListenerForKeyboardPress() {
-    window.addEventListener('keypress', e => {
-        const pressedBtn = document.querySelector(`.btn[data-key="${e.keyCode}"]`);
-        pressedBtn.click();
+function setEventListenersForKeyboardPress() {
+    window.addEventListener('keydown', e => {
+        handleKeyboardPress(e);
     });
+
+    window.addEventListener('keyup', e => {
+        handleKeyboardPress(e);
+    });
+}
+
+function handleKeyboardPress(e) {
+    const pressedBtn = document.querySelector(`.btn[data-key="${e.key}"]`);
+
+    if (!pressedBtn) return;
+
+    if (e.type === 'keydown') {
+        pressedBtn.classList.add('btn-active');
+        pressedBtn.click();
+    } else {
+        pressedBtn.classList.remove('btn-active');
+    }
 }
 
 function handleBtnClick(e) {
