@@ -64,6 +64,7 @@ function Calculator() {
 
 function main() {
     setEventListenersForButtons();
+    setEventListenerForKeyboardPress();
 }
 
 function setEventListenersForButtons() {
@@ -71,6 +72,13 @@ function setEventListenersForButtons() {
     btnList.forEach(btn => btn.addEventListener('click', e => {
         handleBtnClick(e);
     }));
+}
+
+function setEventListenerForKeyboardPress() {
+    window.addEventListener('keypress', e => {
+        const pressedBtn = document.querySelector(`.btn[data-key="${e.keyCode}"]`);
+        pressedBtn.click();
+    });
 }
 
 function handleBtnClick(e) {
