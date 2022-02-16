@@ -143,6 +143,8 @@ function handleNumberInput(value) {
 }
 
 function handleFloatInput(value) {
+    if (checkInputIncludesValue('.')) return;
+    
     if (!calculatorObject.calculatedInput) {
         inputValuePush(value);
     }
@@ -232,6 +234,11 @@ function checkInputForZero() {
 function checkInputForFirstZero() {
     const inputField = document.querySelector('#result-field');
     return inputField.value[0] === '0';
+}
+
+function checkInputIncludesValue(value) {
+    const inputField = document.querySelector('#result-field');
+    return inputField.value.includes(value);
 }
 
 function changeInputSign() {
