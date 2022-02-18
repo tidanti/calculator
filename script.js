@@ -141,10 +141,6 @@ function handleBtnClick(e) {
         case currentValue === '=':
             handleEqualInput();
             break;
-
-        // for tests...
-        default:
-            //alert('oo');
     }
 }
 
@@ -185,14 +181,10 @@ function handleSignInput(value) {
     if (!calculatorObject.operator) {
         calculatorObject.setNewCurrentRes(calculatorObject.operand);
         calculatorObject.setNewOperator(value);
-        //calculatorObject.setNewCurrentRes(
-        //calculatorObject.calcNewCurrentRes());
     } else {
         calculatorObject.setNewCurrentRes(
         calculatorObject.calcNewCurrentRes());
         calculatorObject.setNewOperator(value);
-        //calculatorObject.setNewCurrentRes(
-        //calculatorObject.calcNewCurrentRes());
 
         setNewInputValue(calculatorObject.currentRes);
     }
@@ -273,12 +265,4 @@ function resetAll() {
     calculatorObject = new Calculator();
 }
 
-/*function mainTests() {
-    calculatorObject.operand = 2;
-    calculatorObject.operator = '*';
-    let res = calculatorObject.calculate(3);
-    console.log(res);
-}*/
-
-//mainTests();
 main();
