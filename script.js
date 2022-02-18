@@ -221,11 +221,15 @@ function setNewInputValue(value) {
 }
 
 function inputValuePush(value) {
+    if (checkInputHasMaxLength()) return;
+
     const inputField = document.querySelector('#result-field');
     inputField.value += value;
 }
 
 function inputValueUnshift(value) {
+    if (checkInputHasMaxLength()) return;
+
     const inputField = document.querySelector('#result-field');
     inputField.value = value + inputField.value;
 }
@@ -248,6 +252,12 @@ function checkInputForFirstZero() {
 function checkInputIncludesValue(value) {
     const inputField = document.querySelector('#result-field');
     return inputField.value.includes(value);
+}
+
+function checkInputHasMaxLength() {
+    const MAX_LENGTH = 25; // need testing
+    const inputField = document.querySelector('#result-field');
+    return inputField.value.length >= MAX_LENGTH;
 }
 
 function changeInputSign() {
